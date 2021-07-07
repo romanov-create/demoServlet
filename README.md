@@ -23,21 +23,16 @@ mvn org.wildfly.plugins:wildfly-maven-plugin:2.0.2.Final:deploy
    
 5. Скачать и установить базу данных PostgreSQL
 ```bash
-   -- Table: public.users
-
--- DROP TABLE public.users;
-
-CREATE TABLE public.users
+create table users
 (
-id integer NOT NULL DEFAULT nextval('users_id_seq'::regclass),
-name character varying COLLATE pg_catalog."default",
-email character varying COLLATE pg_catalog."default",
-country character varying COLLATE pg_catalog."default",
-CONSTRAINT users_pk PRIMARY KEY (id)
-)
+    id      serial not null
+        constraint users_pk
+            primary key,
+    name    varchar,
+    email   varchar,
+    country varchar
+);
 
-TABLESPACE pg_default;
-
-ALTER TABLE public.users
-OWNER to postgres;
+alter table users
+    owner to postgres;
 ```
