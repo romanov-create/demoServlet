@@ -1,5 +1,7 @@
 # demoServlet
 
+[![Build Status](https://travis-ci.org/OKaluzny/demoServlet.svg?branch=master)](https://travis-ci.org/OKaluzny/demoServlet)
+
 Для того что бы запустить это приложение, необходимо:
 
 1. Сделать Fork данного проекта (приоритет) или клонировать репозиторий
