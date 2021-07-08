@@ -1,6 +1,6 @@
 # demoServlet
 
-[![Build Status](https://travis-ci.org/OKaluzny/demoServlet.svg?branch=master)](https://travis-ci.org/OKaluzny/demoServlet)
+[![Build Status](https://travis-ci.com/OKaluzny/demoServlet.svg?branch=master)](https://travis-ci.com/OKaluzny/demoServlet)
 
 Для того что бы запустить это приложение, необходимо:
 
