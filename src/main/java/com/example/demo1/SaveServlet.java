@@ -22,12 +22,14 @@ public class SaveServlet extends HttpServlet {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String country = request.getParameter("country");
+        String gender = request.getParameter("gender");
 
         Employee employee = new Employee();
 
         employee.setName(name);
         employee.setEmail(email);
         employee.setCountry(country);
+        employee.setGender(gender);
 
         //out.println(employee.toString());
         //out.println(EmployeeRepository.getConnection());

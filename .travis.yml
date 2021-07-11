@@ -28,3 +28,4 @@ after_success:
 
 script:
   - ./mvnw clean install -B
+  -

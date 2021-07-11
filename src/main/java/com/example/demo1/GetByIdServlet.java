@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/idServlet")
-public class idServlet extends HttpServlet {
+public class GetByIdServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -19,9 +19,12 @@ public class idServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
 
         List<Employee> list = new ArrayList<>();
+
         String sid = req.getParameter("id");
         int id = Integer.parseInt(sid);
+
         list.add(EmployeeRepository.getEmployeeById(id));
+
         out.print(list);
         out.close();
 

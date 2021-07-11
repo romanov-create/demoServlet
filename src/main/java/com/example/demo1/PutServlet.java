@@ -28,6 +28,7 @@ public class PutServlet extends HttpServlet {
         employee.setName(name);
         employee.setEmail(email);
         employee.setCountry(request.getParameter("country"));
+        employee.setGender(request.getParameter("gender"));
 
         int status = EmployeeRepository.update(employee);
 
@@ -35,6 +36,7 @@ public class PutServlet extends HttpServlet {
             response.sendRedirect("viewServlet");
         } else {
             out.println("Sorry! unable to update record");
+            response.sendError(id,"Invalid request");
         }
         out.close();
     }
