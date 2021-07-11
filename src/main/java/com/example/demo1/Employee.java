@@ -4,8 +4,18 @@ public class Employee {
 
     private int id;
     private String name;
+    private String surname;
     private String email;
     private String country;
+    private String phoneNumber;
+
+    public String getSurname() { return surname; }
+
+    public void setSurname(String surname) { this.surname = surname; }
+
+    public String getPhoneNumber() { return phoneNumber; }
+
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
     public int getId() {
         return id;
@@ -41,10 +51,12 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", country='" + country + '\'' +
-                '}';
+        return "Employee [" +
+                "name ='" + name + '\'' +
+                ", surname ='" + surname + '\'' +
+                ", email ='" + email + '\'' +
+                ", country ='" + country + '\'' +
+                ", phoneNumber ='" + phoneNumber + '\'' +
+                "]\n";
     }
 }
