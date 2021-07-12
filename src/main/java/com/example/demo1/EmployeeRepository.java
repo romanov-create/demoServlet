@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeRepository {
-
-   /* public static void main(String[] args) {
+//TEST
+  /*  public static void main(String[] args) {
         getConnection();
 
         Employee employee = new Employee();
