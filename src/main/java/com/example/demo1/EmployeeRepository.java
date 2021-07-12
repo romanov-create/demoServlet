@@ -1,41 +1,41 @@
 package com.example.demo1;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeRepository {
 
-  /* public static void main(String[] args) {
-
+   /* public static void main(String[] args) {
         getConnection();
+
         Employee employee = new Employee();
 
-        employee.setName("Jack Black");
-        employee.setEmail("jack@gmail.com");
-        employee.setCountry("Ukraine");
-        employee.setGender("MALE");
+        employee.setName("oleg");
+        employee.setEmail(" ");
+        employee.setCountry(" ");
         save(employee);
-        //delete(8);
     }*/
 
     public static Connection getConnection() {
-
         Connection connection = null;
         String url = "jdbc:postgresql://localhost:5432/employee";
         String user = "postgres";
         String password = "postgres";
 
         try {
+            //Class.forName("org.postgresql.Driver"); For Tomcat Local Server
             connection = DriverManager.getConnection(url, user, password);
             if (connection != null) {
                 System.out.println("Connected to the PostgreSQL server successfully.");
             } else {
                 System.out.println("Failed to make connection!");
             }
-        } catch (SQLException sqlException) {
-            System.out.println(sqlException);
+        } catch (SQLException e) {
+            getSQLExceptionInfo(e);
         }
+
         return connection;
     }
 
@@ -43,17 +43,18 @@ public class EmployeeRepository {
         int status = 0;
         try {
             Connection connection = EmployeeRepository.getConnection();
-            PreparedStatement ps = connection.prepareStatement("insert into users(name,email,country,gender) values (?,?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("insert into users(name,surname,email,country,phonenumber) values (?,?,?,?,?)");
             ps.setString(1, employee.getName());
-            ps.setString(2, employee.getEmail());
-            ps.setString(3, employee.getCountry());
-            ps.setString(4, employee.getGender());
+            ps.setString(2, employee.getSurname());
+            ps.setString(3, employee.getEmail());
+            ps.setString(4, employee.getCountry());
+            ps.setString(5, employee.getPhoneNumber());
 
             status = ps.executeUpdate();
             connection.close();
 
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            getSQLExceptionInfo(e);
         }
         return status;
     }
@@ -64,24 +65,24 @@ public class EmployeeRepository {
 
         try {
             Connection connection = EmployeeRepository.getConnection();
-            PreparedStatement ps = connection.prepareStatement("update users set name=?,email=?,country=?,gender=? where id=?");
+            PreparedStatement ps = connection.prepareStatement("update users set name=?,surname=?,email=?,country=?,phonenumber=? where id=?");
             ps.setString(1, employee.getName());
-            ps.setString(2, employee.getEmail());
-            ps.setString(3, employee.getCountry());
-            ps.setString(4, employee.getGender());
-            ps.setInt(5, employee.getId());
+            ps.setString(2, employee.getSurname());
+            ps.setString(3, employee.getEmail());
+            ps.setString(4, employee.getCountry());
+            ps.setString(5, employee.getPhoneNumber());
+            ps.setInt(6, employee.getId());
 
             status = ps.executeUpdate();
             connection.close();
 
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+        } catch (SQLException e) {
+            getSQLExceptionInfo(e);
         }
         return status;
     }
 
     public static int delete(int id) {
-
         int status = 0;
 
         try {
@@ -91,33 +92,27 @@ public class EmployeeRepository {
             status = ps.executeUpdate();
 
             connection.close();
-
-        } catch (SQLException exception) {
-            exception.printStackTrace();
+        } catch (SQLException e) {
+            getSQLExceptionInfo(e);
         }
         return status;
     }
 
     public static Employee getEmployeeById(int id) {
-
         Employee employee = new Employee();
-
         try {
             Connection connection = EmployeeRepository.getConnection();
             PreparedStatement ps = connection.prepareStatement("select * from users where id=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
+
             if (rs.next()) {
-                employee.setId(rs.getInt(1));
-                employee.setName(rs.getString(2));
-                employee.setEmail(rs.getString(3));
-                employee.setCountry(rs.getString(4));
-                employee.setGender(rs.getString(5));
+                setEmployee(employee, rs);
             }
             connection.close();
 
-        } catch (SQLException exception) {
-            exception.printStackTrace();
+        } catch (SQLException e) {
+            getSQLExceptionInfo(e);
         }
         return employee;
     }
@@ -132,22 +127,40 @@ public class EmployeeRepository {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-
                 Employee employee = new Employee();
-
-                employee.setId(rs.getInt(1));
-                employee.setName(rs.getString(2));
-                employee.setEmail(rs.getString(3));
-                employee.setCountry(rs.getString(4));
-                employee.setGender(rs.getString(5));
-
+                setEmployee(employee, rs);
                 listEmployees.add(employee);
             }
             connection.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            getSQLExceptionInfo(e);
         }
+
         return listEmployees;
+    }
+
+    private static void getSQLExceptionInfo(SQLException e) {
+        System.out.println("SQLException message:" + e.getMessage());
+        System.out.println("SQLException SQL state:" + e.getSQLState());
+        System.out.println("SQLException SQL error code:" + e.getErrorCode());
+    }
+
+    private static void setEmployee(Employee employee, ResultSet rs) throws SQLException {
+        employee.setId(rs.getInt(1));
+        employee.setName(rs.getString(2));
+        employee.setSurname(rs.getString(3));
+        employee.setEmail(rs.getString(4));
+        employee.setCountry(rs.getString(5));
+        employee.setPhoneNumber(rs.getString(6));
+    }
+
+
+    public static void setEmployeeByRequest(Employee employee, HttpServletRequest request){
+        employee.setName(request.getParameter("name"));
+        employee.setSurname(request.getParameter("surname"));
+        employee.setEmail(request.getParameter("email"));
+        employee.setCountry(request.getParameter("country"));
+        employee.setPhoneNumber(request.getParameter("phonenumber"));
     }
 }

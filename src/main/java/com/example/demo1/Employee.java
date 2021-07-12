@@ -4,9 +4,18 @@ public class Employee {
 
     private int id;
     private String name;
+    private String surname;
     private String email;
     private String country;
-    private String gender;
+    private String phoneNumber;
+
+    public String getSurname() { return surname; }
+
+    public void setSurname(String surname) { this.surname = surname; }
+
+    public String getPhoneNumber() { return phoneNumber; }
+
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
     public int getId() {
         return id;
@@ -40,21 +49,14 @@ public class Employee {
         this.country = country;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
     @Override
     public String toString() {
-        return "Employee{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", country='" + country + '\'' +
-                ", gender='" + gender + '\'' +
-                '}';
+        return "Employee [" +
+                "name ='" + name + '\'' +
+                ", surname ='" + surname + '\'' +
+                ", email ='" + email + '\'' +
+                ", country ='" + country + '\'' +
+                ", phoneNumber ='" + phoneNumber + '\'' +
+                "]\n";
     }
 }

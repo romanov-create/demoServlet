@@ -1,6 +1,5 @@
 package com.example.demo1;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +11,7 @@ import java.io.PrintWriter;
 public class PutServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -20,15 +19,10 @@ public class PutServlet extends HttpServlet {
         String sid = request.getParameter("id");
         int id = Integer.parseInt(sid);
 
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-
         Employee employee = new Employee();
+
+        EmployeeRepository.setEmployeeByRequest(employee, request);
         employee.setId(id);
-        employee.setName(name);
-        employee.setEmail(email);
-        employee.setCountry(request.getParameter("country"));
-        employee.setGender(request.getParameter("gender"));
 
         int status = EmployeeRepository.update(employee);
 
@@ -36,7 +30,6 @@ public class PutServlet extends HttpServlet {
             response.sendRedirect("viewServlet");
         } else {
             out.println("Sorry! unable to update record");
-            response.sendError(id,"Invalid request");
         }
         out.close();
     }
