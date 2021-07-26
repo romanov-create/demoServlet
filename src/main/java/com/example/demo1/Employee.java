@@ -8,6 +8,24 @@ public class Employee {
     private String email;
     private String country;
     private String phoneNumber;
+    private String gender;
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", country='" + country + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", gender='" + gender + '\'' +
+                '}';
+    }
+
+    public String getGender() { return gender;}
+
+    public void setGender(String gender) { this.gender = gender;}
 
     public String getSurname() { return surname; }
 
@@ -45,18 +63,6 @@ public class Employee {
         return country;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
+    public void setCountry(String country) { this.country = country;}
 
-    @Override
-    public String toString() {
-        return "Employee [" +
-                "name ='" + name + '\'' +
-                ", surname ='" + surname + '\'' +
-                ", email ='" + email + '\'' +
-                ", country ='" + country + '\'' +
-                ", phoneNumber ='" + phoneNumber + '\'' +
-                "]\n";
-    }
 }
