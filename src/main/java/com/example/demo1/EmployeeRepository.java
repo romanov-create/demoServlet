@@ -7,16 +7,18 @@ import java.util.List;
 
 public class EmployeeRepository {
 
-   /* public static void main(String[] args) {
+    public static void main(String[] args) {
         getConnection();
 
         Employee employee = new Employee();
 
-        employee.setName("oleg");
-        employee.setEmail(" ");
-        employee.setCountry(" ");
+        employee.setName("John");
+        employee.setEmail("test@mail.com");
+        employee.setCountry("UK");
+        employee.setGender("Male");
+        employee.setSurname("Cofee");
         save(employee);
-    }*/
+    }
 
     public static Connection getConnection() {
         Connection connection = null;
@@ -43,12 +45,13 @@ public class EmployeeRepository {
         int status = 0;
         try {
             Connection connection = EmployeeRepository.getConnection();
-            PreparedStatement ps = connection.prepareStatement("insert into users(name,surname,email,country,phonenumber) values (?,?,?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("insert into users(name,surname,email,country,phonenumber,gender) values (?,?,?,?,?,?)");
             ps.setString(1, employee.getName());
             ps.setString(2, employee.getSurname());
             ps.setString(3, employee.getEmail());
             ps.setString(4, employee.getCountry());
             ps.setString(5, employee.getPhoneNumber());
+            ps.setString(6, employee.getGender());
 
             status = ps.executeUpdate();
             connection.close();
@@ -65,13 +68,14 @@ public class EmployeeRepository {
 
         try {
             Connection connection = EmployeeRepository.getConnection();
-            PreparedStatement ps = connection.prepareStatement("update users set name=?,surname=?,email=?,country=?,phonenumber=? where id=?");
+            PreparedStatement ps = connection.prepareStatement("update users set name=?,surname=?,email=?,country=?,phonenumber=?,gender=? where id=?");
             ps.setString(1, employee.getName());
             ps.setString(2, employee.getSurname());
             ps.setString(3, employee.getEmail());
             ps.setString(4, employee.getCountry());
             ps.setString(5, employee.getPhoneNumber());
-            ps.setInt(6, employee.getId());
+            ps.setString(6, employee.getGender());
+            ps.setInt(7, employee.getId());
 
             status = ps.executeUpdate();
             connection.close();
@@ -153,6 +157,7 @@ public class EmployeeRepository {
         employee.setEmail(rs.getString(4));
         employee.setCountry(rs.getString(5));
         employee.setPhoneNumber(rs.getString(6));
+        employee.setGender(rs.getString(7));
     }
 
 
@@ -161,6 +166,7 @@ public class EmployeeRepository {
         employee.setSurname(request.getParameter("surname"));
         employee.setEmail(request.getParameter("email"));
         employee.setCountry(request.getParameter("country"));
-        employee.setPhoneNumber(request.getParameter("phonenumber"));
+        employee.setPhoneNumber(request.getParameter("phoneNumber"));
+        employee.setGender(request.getParameter("gender"));
     }
 }
